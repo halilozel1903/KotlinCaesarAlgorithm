@@ -3,7 +3,7 @@ package org.example
 fun caesarCipher(text: String, key: Int) = text.map { char ->
     if (char.isLetter()) {
         val shiftedChar = 'a' + (char.lowercaseChar() - 'a' + key) % 26
-        if (char.isUpperCase()) shiftedChar.toUpperCase() else shiftedChar
+        if (char.isUpperCase()) shiftedChar.uppercaseChar() else shiftedChar
     } else {
         char
     }
