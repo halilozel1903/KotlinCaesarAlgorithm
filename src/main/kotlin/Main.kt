@@ -1,33 +1,23 @@
 package org.example
 
-fun caesarCipher(text: String, key: Int): String {
-    val alphabet = "abcdefghijklmnopqrstuvwxyz"
-    val shiftedAlphabet = alphabet.substring(key % 26) + alphabet.substring(0, key % 26)
+fun caesarCipher(text: String, key: Int) = text.map { char ->
+    if (char.isLetter()) {
+        val shiftedChar = 'a' + (char.lowercaseChar() - 'a' + key) % 26
+        if (char.isUpperCase()) shiftedChar.toUpperCase() else shiftedChar
+    } else {
+        char
+    }
+}.joinToString("")
 
-    val encryptedText = text.map { char ->
-        if (char.isLetter()) {
-            val index = alphabet.indexOf(char.lowercaseChar())
-            val newIndex = (index + key) % 26
-            shiftedAlphabet[newIndex]
-        } else {
-            char
-        }
-    }.joinToString("")
-
-    return encryptedText
-}
-
-fun caesarDecipher(text: String, key: Int): String {
-    return caesarCipher(text, 26 - key % 26)
-}
+fun caesarDecipher(text: String, key: Int) = caesarCipher(text, 26 - key % 26)
 
 fun main() {
     val message = "Shakira"
     val key = 3
 
-    val encryptedMessage = caesarCipher(message, key)
-    println("Şifreli mesaj: $encryptedMessage")
+    val encrypted = caesarCipher(message, key)
+    println("Encrypted: $encrypted")
 
-    val decryptedMessage = caesarDecipher(encryptedMessage, key)
-    println("Çözülmüş mesaj: $decryptedMessage")
+    val decrypted = caesarDecipher(encrypted, key)
+    println("Decrypted: $decrypted")
 }
