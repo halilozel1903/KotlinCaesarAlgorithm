@@ -6,7 +6,7 @@ fun caesarCipher(text: String, key: Int): String {
 
     val encryptedText = text.map { char ->
         if (char.isLetter()) {
-            val index = alphabet.indexOf(char.toLowerCase())
+            val index = alphabet.indexOf(char.lowercaseChar())
             val newIndex = (index + key) % 26
             shiftedAlphabet[newIndex]
         } else {
