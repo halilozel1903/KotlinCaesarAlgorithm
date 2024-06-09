@@ -13,7 +13,7 @@ fun caesarDecipher(text: String, key: Int) = caesarCipher(text, 26 - key % 26)
 
 fun main() {
     val message = "Taylor Swift"
-    val key = 3
+    val key = 13
 
     val encrypted = caesarCipher(message, key)
     println("Encrypted: $encrypted")
