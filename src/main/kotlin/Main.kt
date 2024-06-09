@@ -12,7 +12,7 @@ fun caesarCipher(text: String, key: Int) = text.map { char ->
 fun caesarDecipher(text: String, key: Int) = caesarCipher(text, 26 - key % 26)
 
 fun main() {
-    val message = "Shakira"
+    val message = "Taylor Swift"
     val key = 3
 
     val encrypted = caesarCipher(message, key)
