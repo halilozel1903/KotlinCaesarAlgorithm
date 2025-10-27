@@ -1,0 +1,12 @@
+package domain.usecase
+
+import domain.repository.CaesarCipherRepository
+
+class EncryptTextUseCase(
+    private val repository: CaesarCipherRepository
+) {
+    operator fun invoke(text: String, shift: Int): String {
+        require(shift >= 0) { "Shift value must be non-negative" }
+        return repository.encrypt(text, shift)
+    }
+}
