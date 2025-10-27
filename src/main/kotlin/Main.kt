@@ -1,23 +1,24 @@
 package org.example
 
-fun caesarCipher(text: String, key: Int) = text.map { char ->
-    if (char.isLetter()) {
-        val shiftedChar = 'a' + (char.lowercaseChar() - 'a' + key) % 26
-        if (char.isUpperCase()) shiftedChar.uppercaseChar() else shiftedChar
-    } else {
-        char
-    }
-}.joinToString("")
-
-fun caesarDecipher(text: String, key: Int) = caesarCipher(text, 26 - key % 26)
+import data.datasource.CaesarCipherDataSource
+import data.repository.CaesarCipherRepositoryImpl
+import domain.usecase.DecryptTextUseCase
+import domain.usecase.EncryptTextUseCase
+import presentation.viewmodel.CaesarCipherViewModel
 
 fun main() {
-    val message = "Taylor Swift"
-    val key = 13
+    val dataSource = CaesarCipherDataSource()
+    val repository = CaesarCipherRepositoryImpl(dataSource)
+    val encryptTextUseCase = EncryptTextUseCase(repository)
+    val decryptTextUseCase = DecryptTextUseCase(repository)
+    val viewModel = CaesarCipherViewModel(encryptTextUseCase, decryptTextUseCase)
 
-    val encrypted = caesarCipher(message, key)
-    println("Encrypted: $encrypted")
+    viewModel.onTextChanged("Taylor Swift")
+    viewModel.onShiftChanged(13)
+    viewModel.encrypt()
 
-    val decrypted = caesarDecipher(encrypted, key)
-    println("Decrypted: $decrypted")
+    println("Encrypted: ${viewModel.uiState.encryptedText}")
+
+    viewModel.decryptFromEncrypted()
+    println("Decrypted: ${viewModel.uiState.decryptedText}")
 }
